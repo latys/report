@@ -1,0 +1,56 @@
+﻿<Page x:Class="Report.ReportWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Report"
+       
+        mc:Ignorable="d"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"  
+        Loaded="page_load">
+
+
+    <Grid >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="60*"/>
+
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="2"/>
+            <RowDefinition Height="700*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="2,0,-5,0" Grid.ColumnSpan="2" VerticalAlignment="Top">
+            <Label  Margin="10,5,0,0" Visibility="Hidden" Width="0">机台编号</Label>
+            <ComboBox x:Name="comMachineName" Margin="10,5,0,0" Width="0" Visibility="Hidden"></ComboBox>
+            <Label  Margin="10,5,0,0" >工序类型</Label>
+            <ComboBox x:Name="comProcessName" Margin="10,5,0,0" Width="100" IsEditable="True" KeyUp="comProcessName_KeyUp" SelectionChanged="comProcessName_SelectionChanged"></ComboBox>
+            <Label  Margin="10,5,0,0" >机长</Label>
+            <ComboBox x:Name="comMachineLeader" Margin="10,5,0,0" Width="100" IsEditable="True" DropDownOpened="comMachineLeader_DropDownOpened" KeyUp="comMachineLeader_KeyUp"></ComboBox>
+            <Label Margin="10,5,0,0" >起始时间</Label>
+            <DatePicker Margin="10,5,0,0" x:Name="dpStartDate" SelectedDate="{x:Static sys:DateTime.Now}"></DatePicker>
+            <Label Margin="10,5,0,0">结束时间</Label>
+            <DatePicker Margin="10,5,0,0"  x:Name="dpEndDate" SelectedDate="{x:Static sys:DateTime.Now}"></DatePicker>
+            <Button x:Name="Query" Content="查询" Margin="10,5,0,0" HorizontalAlignment="Right"  VerticalAlignment="Top" Width="75" Height="22" Click="Query_Click"/>
+            <Button x:Name="GenReport" Content="生成报表" Margin="10,5,0,0" HorizontalAlignment="Right"  VerticalAlignment="Top" Width="75" Height="22" Click="GenReport_Click"/>
+
+        </StackPanel>
+
+        <DataGrid x:Name="dataGrid" ColumnWidth="*" RowHeight="25" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,2,10,1" ItemsSource="{Binding}" AutoGenerateColumns="true" FontSize="12"  Grid.Row="1" >
+            <!--<DataGrid.Columns>
+                <DataGridTextColumn Header="生产人员" Binding="{Binding WorkUnit,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="机台号" Binding="{Binding MachineNo,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="错误类型" Binding="{Binding errType,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="工序类型" Binding="{Binding processType,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="缺陷个数" Binding="{Binding errCount,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="总数" Binding="{Binding productionCount,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <DataGridTextColumn Header="缺陷率" Binding="{Binding errRate,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+            </DataGrid.Columns>-->
+        </DataGrid>
+
+        <WindowsFormsHost x:Name="WinFormHost" Grid.Row="2"/>
+    </Grid>
+
+
+</Page>

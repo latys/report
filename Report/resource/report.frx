@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="04/18/2018 17:30:14" ReportInfo.Modified="06/29/2018 15:45:01" ReportInfo.CreatorVersion="2016.1.0.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+
+    private void Table1_ManualBuild(object sender, EventArgs e)
+    {
+      // get the data source by its name
+      DataSourceBase rowData = Report.GetDataSource(&quot;rateView&quot;);
+      // initialize it
+      rowData.Init();
+      
+      DataSourceBase rowData1 = Report.GetDataSource(&quot;unCommit&quot;);
+      // initialize it
+      rowData1.Init();
+      
+    
+      // printing the table header
+      Table1.PrintRow(0);
+      Table1.PrintColumns();
+      // loop through the data source rows
+      while (rowData.HasMoreRows)
+      {
+        // printing the table row
+        Table1.PrintRow(1);
+        Table1.PrintColumns();
+        // select the next data row
+        rowData.Next();
+      } 
+      // printing the table footer
+      Table1.PrintRow(2);
+      Table1.PrintColumns();
+      
+      Table1.PrintRow(3);
+      Table1.PrintColumns();
+      while (rowData1.HasMoreRows)
+      {
+        // printing the table row
+        Table1.PrintRow(4);
+        Table1.PrintColumns();
+        // select the next data row
+        rowData1.Next();
+      } 
+      // printing the table footer
+      Table1.PrintRow(5);
+      Table1.PrintColumns();
+      
+    
+      
+    }
+
+    
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <Parameter Name="machineNo" DataType="System.String"/>
+    <Parameter Name="processName" DataType="System.String"/>
+    <Parameter Name="month" DataType="System.String"/>
+    <Parameter Name="totalRate" DataType="System.String"/>
+    <Parameter Name="MachineManager" DataType="System.String"/>
+    <Total Name="Total" Expression="Cell6" Evaluator="Data1"/>
+  </Dictionary>
+  <ReportPage Name="Page1">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="37.8">
+      <TextObject Name="Text1" Left="264.6" Top="9.45" Width="151.2" Height="18.9" Text="作废率统计报表&#13;&#10;&#13;&#10;" Font="宋体, 14.25pt, style=Bold"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="41.8" Width="718.2" Height="94.5">
+      <TextObject Name="Text3" Left="9.45" Top="37.8" Width="47.25" Height="18.9" Text="工序：&#13;&#10;" Font="宋体, 9pt"/>
+      <TextObject Name="Text4" Left="9.45" Top="66.15" Width="47.25" Height="18.9" Text="月份：&#13;&#10;" Font="宋体, 9pt"/>
+      <TextObject Name="Text5" Left="406.35" Top="9.45" Width="151.2" Height="18.9" Text="[machineNo]" Font="宋体, 9pt"/>
+      <TextObject Name="Text6" Left="75.6" Top="37.8" Width="151.2" Height="18.9" Text="[processName]" Font="宋体, 9pt"/>
+      <TextObject Name="Text7" Left="75.6" Top="66.15" Width="151.2" Height="18.9" Text="[month]" Font="宋体, 9pt"/>
+      <TextObject Name="Text8" Left="406.35" Top="66.15" Width="66.15" Height="18.9" Text="打印时间:&#13;&#10;" Font="宋体, 9pt"/>
+      <TextObject Name="Text9" Left="481.95" Top="66.15" Width="198.45" Height="18.9" Text="[Date]" Font="宋体, 9pt"/>
+      <TextObject Name="Text2" Left="9.45" Top="9.45" Width="47.25" Height="18.9" Text="机长：" Font="宋体, 9pt"/>
+      <TextObject Name="Text10" Left="75.6" Top="9.45" Width="151.2" Height="18.9" Text="[MachineManager]" Font="宋体, 9pt"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="140.3" Width="718.2" Height="183.33">
+      <TableObject Name="Table1" Left="9.45" Top="9.45" Width="668.89" Height="164.43" Border.Lines="All" ManualBuildEvent="Table1_ManualBuild">
+        <TableColumn Name="Column5"/>
+        <TableColumn Name="Column1" Width="108.16"/>
+        <TableColumn Name="Column2" Width="240.46"/>
+        <TableColumn Name="Column3" Width="108.16"/>
+        <TableColumn Name="Column4" Width="145.96"/>
+        <TableRow Name="Row1" Height="30.24">
+          <TableCell Name="Cell29" Font="宋体, 9pt"/>
+          <TableCell Name="Cell1" Text="数量&#13;&#10;" Font="宋体, 9pt"/>
+          <TableCell Name="Cell2" Text="号段&#13;&#10;" Font="宋体, 9pt"/>
+          <TableCell Name="Cell3" Text="废品数" Font="宋体, 9pt"/>
+          <TableCell Name="Cell4" Text="作废率&#13;&#10;" Font="宋体, 9pt"/>
+        </TableRow>
+        <TableRow Name="Row2" Height="20.79">
+          <TableCell Name="Cell30" Font="宋体, 9pt"/>
+          <TableCell Name="Cell6" Text="[rateView.Count]" VertAlign="Center" Font="宋体, 9pt"/>
+          <TableCell Name="Cell7" Text="[rateView.Code]" VertAlign="Center" Font="宋体, 9pt"/>
+          <TableCell Name="Cell8" Text="[rateView.errCount]" VertAlign="Center" Font="宋体, 9pt"/>
+          <TableCell Name="Cell9" Text="[rateView.rate]" VertAlign="Center" Font="宋体, 9pt"/>
+        </TableRow>
+        <TableRow Name="Row6" Height="47.25">
+          <TableCell Name="Cell34" Text="合计&#13;&#10;" VertAlign="Center" Font="宋体, 9pt"/>
+          <TableCell Name="Cell25" Text="[Sum(Cell6)]" VertAlign="Center" Font="宋体, 9pt"/>
+          <TableCell Name="Cell26" Font="宋体, 9pt"/>
+          <TableCell Name="Cell27" Text="[Sum(Cell8)]" VertAlign="Center" Font="宋体, 9pt"/>
+          <TableCell Name="Cell28" Text="[totalRate]" VertAlign="Center" Font="宋体, 9pt"/>
+        </TableRow>
+        <TableRow Name="Row16">
+          <TableCell Name="Cell80" Text="未提交号段" Font="宋体, 9pt" ColSpan="5"/>
+          <TableCell Name="Cell81" Font="宋体, 9pt"/>
+          <TableCell Name="Cell82" Font="宋体, 9pt"/>
+          <TableCell Name="Cell83" Font="宋体, 9pt"/>
+          <TableCell Name="Cell84" Font="宋体, 9pt"/>
+        </TableRow>
+        <TableRow Name="Row14">
+          <TableCell Name="Cell70" Font="宋体, 9pt"/>
+          <TableCell Name="Cell71" Text="[unCommit.Count]" Font="宋体, 9pt"/>
+          <TableCell Name="Cell72" Text="[unCommit.CodeRange]" Font="宋体, 9pt"/>
+          <TableCell Name="Cell73" Font="宋体, 9pt"/>
+          <TableCell Name="Cell74" Font="宋体, 9pt"/>
+        </TableRow>
+        <TableRow Name="Row15" Height="28.35">
+          <TableCell Name="Cell75" Text="合计" Font="宋体, 9pt"/>
+          <TableCell Name="Cell76" Text="[Sum(Cell71)]" Font="宋体, 9pt"/>
+          <TableCell Name="Cell77" Font="宋体, 9pt"/>
+          <TableCell Name="Cell78" Font="宋体, 9pt"/>
+          <TableCell Name="Cell79" Font="宋体, 9pt"/>
+        </TableRow>
+      </TableObject>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="327.63" Width="718.2" Height="28.35"/>
+  </ReportPage>
+</Report>
